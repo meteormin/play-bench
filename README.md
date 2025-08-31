@@ -129,20 +129,25 @@ This ensures all languages and algorithms have consistent input/output behavior,
 
 ## Usage
 
-### Build
+1. Setup
 
 ```sh
-./scripts/build_all.sh
+make setup
 ```
 
-### Run
+2. Build
 
 ```sh
-
+make build
 ```
 
-###
+3. Run
+
+```sh
+# main python script
+./main
+```
 
 ## License
 
-MIT
+[MIT](LICENSE)
