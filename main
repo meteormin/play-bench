@@ -1,0 +1,48 @@
+#!/usr/bin/env .venv/bin/python
+import subprocess
+import sys
+from pathlib import Path
+
+# 프로젝트 루트 기준
+ROOT = Path(__file__).resolve().parent
+BIN_RUNNER = ROOT / "bin" / "runner"
+RESULTS_DIR = ROOT / "results"
+REPORTS_DIR = ROOT / "reports"
+
+# mcp.report 모듈 import
+sys.path.insert(0, str(ROOT))  # project-root를 sys.path에 추가
+from mcp import report
+
+
+def main():
+    if len(sys.argv) < 3:
+        print("Usage: <algo> <N>")
+        sys.exit(1)
+
+    algo, n = sys.argv[1], sys.argv[2]
+
+    RESULTS_DIR.mkdir(exist_ok=True)
+    REPORTS_DIR.mkdir(exist_ok=True)
+
+    print(f"Running benchmark: {algo} N={n}")
+    json_file = RESULTS_DIR / f"{algo}_summary.json"
+
+    # 1. runner 실행 → JSON 결과
+    subprocess.run([str(BIN_RUNNER), algo, n], check=True)
+
+    if not json_file.exists():
+        print(f"❌ Benchmark runner failed: {json_file} not found")
+        sys.exit(1)
+
+    print(f"Benchmark JSON saved to {json_file}")
+
+    # 2. Python 모듈을 직접 import 해서 리포트 생성
+    print("Generating AI report")
+    summary = report.load_summary(json_file)
+    out_path = report.generate_full_report(summary, REPORTS_DIR)
+
+    print(f"✅ Report written to {out_path}")
+
+
+if __name__ == "__main__":
+    main()
