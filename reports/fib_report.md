@@ -1,86 +1,66 @@
-# Benchmark Report: FIB (N=100)
-
--   Date: 2025-08-31T05:22:53Z
+# Benchmark Report: FIB (N=1000)
+- Date: 2025-09-01T10:24:05Z
 
 ## Results
-
 | Language | Version | Time (ms) |
-| -------- | ------- | --------- |
-| python   | TODO    | 0.007     |
-| c        | TODO    | 0.036     |
-| go       | TODO    | 0.040     |
-| rust     | TODO    | 0.059     |
-| js       | TODO    | 0.106     |
-| java     | TODO    | 0.487     |
-| php      | TODO    | 0.908     |
+|----------|---------|-----------|
+| c | TODO | 0.031 |
+| go | TODO | 0.032 |
+| python | TODO | 0.033 |
+| rust | TODO | 0.062 |
+| php | TODO | 0.102 |
+| js | TODO | 0.148 |
+| java | TODO | 0.418 |
 
 ## Analysis
+- Fastest: **c** (0.031 ms)
+- Slowest: **java** (0.418 ms)
+- Slowest/Fastest Ratio: 13.5x
 
--   Fastest: **python** (0.007 ms)
--   Slowest: **php** (0.908 ms)
--   Slowest/Fastest Ratio: 129.7x
 
 ## AI Insights
+## 피보나치 수열 (fib) 알고리즘 벤치마크 분석 (N=1000)
 
-### Fibonacci Algorithm Benchmark Analysis (N=100)
+### 1. 알고리즘 복잡도
 
-Here's an analysis of the provided benchmark results for calculating the 100th Fibonacci number across different programming languages.
+*   **시간 복잡도:** 주어진 결과에서 fib 알고리즘이 명시적으로 어떤 방식으로 구현되었는지는 알 수 없지만, N=1000에 대한 결과가 모두 동일한 결과를 반환하는 것으로 보아 올바르게 구현되었다고 가정합니다. 일반적으로 피보나치 수열을 계산하는 가장 기본적인 방법은 재귀적인 방식이며, 이 방법은 시간 복잡도가 O(2^N) 입니다.  그러나 동적 프로그래밍 (메모이제이션) 또는 반복적인 방법을 사용하면 시간 복잡도를 O(N)으로 줄일 수 있습니다. 또한 행렬 거듭제곱을 이용하면 O(log N)까지 줄일 수 있습니다.  벤치마크 결과로만 판단할 때, O(N)이나 O(log N)에 가까운 알고리즘이 사용되었을 가능성이 높습니다. 특히 N=1000이라는 비교적 큰 입력값에 대해 짧은 시간 안에 결과가 나온 것을 보면 더욱 그렇습니다.
 
-**1. Algorithmic Complexity**
+*   **복잡도에 따른 스케일링:** 알고리즘의 시간 복잡도가 O(N)이라면, N이 두 배로 증가하면 실행 시간도 대략 두 배로 증가합니다. O(log N)이라면 N이 크게 증가해도 실행 시간 증가폭은 미미합니다. O(2^N)이라면 N이 조금만 증가해도 실행 시간이 기하급수적으로 증가합니다. 벤치마크 결과로 추정할 때, N이 증가함에 따라 실행 시간도 선형적으로 증가하거나, 혹은 그 증가폭이 매우 작을 것으로 예상됩니다.
 
--   **Time Complexity:** The most likely algorithm used is the recursive Fibonacci algorithm, which has a time complexity of **O(2<sup>N</sup>)**. While dynamic programming or iterative approaches can achieve O(N) complexity, the exponential behavior is likely the dominant factor influencing the timings seen here, assuming a basic recursive implementation was used. A matrix exponentiation method would have O(log N) complexity, which seems unlikely given the results.
+### 2. 언어 성능 차이
 
--   **Scaling:** With O(2<sup>N</sup>) complexity, the execution time roughly doubles with each increment of N. This exponential growth quickly makes the algorithm impractical for larger values of N without significant optimization (like memoization or an iterative approach). Even a seemingly small increase from N=90 to N=100 would represent roughly a 1024-fold increase in the number of operations performed. The observed times are still relatively small for N=100 indicating the use of fast processors or a more optimized algorithm for some languages.
+각 언어의 성능 차이는 여러 요인에 의해 발생합니다.
 
-**2. Language Performance Differences**
+*   **컴파일러 vs 인터프리터:** 컴파일 언어 (C, Go, Rust, Java)는 코드를 기계어로 직접 변환하여 실행하므로 일반적으로 인터프리터 언어 (JavaScript, PHP, Python)보다 빠릅니다. 인터프리터 언어는 코드를 한 줄씩 해석하고 실행하므로 오버헤드가 발생합니다.  하지만 최적화된 인터프리터나 JIT (Just-In-Time) 컴파일러를 사용하는 경우 컴파일 언어에 근접하는 성능을 보이기도 합니다.
 
--   **Why some languages are faster/slower:**
+*   **BigInt vs Native Int:** 피보나치 수열은 숫자가 빠르게 커지므로 N이 커지면 BigInt (임의 정밀도 정수)를 사용해야 합니다.  BigInt는 메모리 제약 없이 큰 수를 표현할 수 있지만, 기본 정수형 연산보다 느립니다.  어떤 언어는 BigInt를 기본적으로 제공하거나, 라이브러리를 통해 제공합니다.  어떤 언어에서 BigInt를 사용했는지, 또 BigInt를 어떻게 구현했는지에 따라 성능 차이가 발생할 수 있습니다.
 
-    -   **C:** C generally excels due to its low-level nature and direct memory management. It compiles to highly optimized machine code, minimizing runtime overhead. It is likely using native integer types which can be a significant factor if the number overflows.
+*   **메모리 관리 및 런타임 오버헤드:** 메모리 관리는 언어 성능에 큰 영향을 미칩니다. C와 Rust는 수동 메모리 관리를 통해 뛰어난 성능을 낼 수 있지만, 메모리 누수와 같은 문제가 발생할 가능성도 있습니다. Go와 Java는 가비지 컬렉션 (GC)을 통해 자동으로 메모리를 관리하지만, GC 실행 시 오버헤드가 발생할 수 있습니다. Python은 참조 카운팅과 GC를 함께 사용하며, JavaScript는 주로 GC를 사용합니다. PHP는 요청이 끝날 때 메모리를 해제하는 방식으로 작동합니다. 각 메모리 관리 방식의 효율성이 언어 성능에 영향을 줍니다. 런타임 오버헤드는 언어 런타임 환경이 제공하는 추가적인 기능 (예: 동적 타입 검사, 예외 처리)로 인해 발생하는 성능 저하를 의미합니다.
 
-    -   **Go:** Go is also compiled and designed for performance. Its garbage collector and runtime are generally efficient. Like C, it probably relies on native integer types.
+주어진 벤치마크 결과를 보면, BigInt 연산이 필요한 알고리즘이 사용되었을 가능성이 높습니다. 그렇지 않다면 integer overflow가 발생하여 정확한 결과를 얻을 수 없기 때문입니다.
 
-    -   **Rust:** Rust is a systems programming language focused on safety and performance. Its zero-cost abstractions and lack of garbage collection contribute to its speed. It is similar to C and Go in its performance profile.
+### 3. 교차 언어 비교
 
-    -   **Python:** Python, as an interpreted language, suffers from runtime overhead because it must interpret the code line by line. Also, Python's dynamic typing adds additional overhead. However, Python shines through the use of optimized libraries that internally execute in C. In this case, the use of BigInt might allow the Python implementation to remain performant for N=100.
+*   **놀라운 결과:** Java의 성능이 다른 컴파일 언어에 비해 상대적으로 낮은 것이 눈에 띕니다. Java는 일반적으로 성능이 좋은 언어로 알려져 있지만, 이 벤치마크에서는 C, Go, Rust보다 상당히 느립니다. 이는 Java의 가비지 컬렉션 오버헤드, BigInteger 구현 방식, 혹은 코드 최적화 수준에 따라 달라질 수 있습니다.
 
-    -   **JavaScript:** JavaScript (JS) performance varies depending on the JavaScript engine (e.g., V8 in Chrome, SpiderMonkey in Firefox). It is usually Just-In-Time (JIT) compiled, which can improve performance. The performance of JS may also come from optimized BigInt libraries for arbitrary-precision integers.
+*   **유사한 성능:** C, Go, Python은 상당히 유사한 성능을 보입니다. C는 메모리 관리를 직접 하기 때문에 이론적으로 가장 빠를 수 있지만, 실제로 BigInt를 사용하려면 추가적인 라이브러리가 필요하고, 이 라이브러리의 성능에 따라 전체 성능이 좌우될 수 있습니다. Go는 가비지 컬렉션이 있지만 효율적으로 작동하고, Python은 C로 작성된 라이브러리를 통해 BigInt 연산을 최적화할 수 있습니다.
 
-    -   **Java:** Java runs on the Java Virtual Machine (JVM), which provides a level of abstraction. While the JVM performs JIT compilation, it still introduces some overhead compared to native compilation. Garbage collection can also contribute to performance variations.
+### 4. 요약
 
-    -   **PHP:** PHP is an interpreted language often used for web development. Its performance is generally lower than compiled languages due to its interpreted nature and the overhead associated with dynamic typing. The slower performance is likely due to the language overhead, not an issue with its BigInt implementation.
+각 언어는 성능, 개발 편의성, 메모리 관리 방식 등에서 장단점을 가지고 있습니다.
 
--   **Compiler vs. Interpreter:** Compiled languages (C, Go, Rust, Java) are generally faster because they translate the source code into machine code beforehand. Interpreted languages (Python, PHP) execute the code line by line at runtime, which incurs a performance penalty. JIT compilation (used in JavaScript and Java) attempts to bridge this gap by compiling code during runtime, but still involves overhead.
+*   **C:** 성능이 매우 중요하고, 메모리 관리에 대한 제어가 필요한 경우에 적합합니다. 하지만 개발 복잡도가 높고, 메모리 관련 버그 발생 가능성이 높습니다.
 
--   **BigInt vs. Native Int:** The Fibonacci sequence grows rapidly. For N=100, the result (354224848179261915075) exceeds the capacity of standard 32-bit integers and likely exceeds the capacity of 64-bit integers too. Languages that automatically handle arbitrary-precision integers (BigInt, or equivalent) might have a smaller performance difference than expected because the bottleneck shifts from the raw algorithm to the arithmetic involved with BigInt. Languages that do _not_ handle this automatically (and therefore are using native integer types) could either overflow (giving incorrect results) or require manual BigInt implementation, which impacts performance.
+*   **Go:** 빠른 성능과 개발 편의성을 모두 원하는 경우에 적합합니다. 가비지 컬렉션이 있지만 효율적으로 작동하며, 병행성 프로그래밍을 쉽게 할 수 있습니다.
 
--   **Memory Management and Runtime Overhead:** Memory management techniques (garbage collection in Java, Go, and JavaScript, versus manual memory management in C and Rust) and runtime overhead (dynamic typing in Python and PHP) significantly impact performance. Garbage collection can introduce pauses, while dynamic typing requires runtime type checking.
+*   **Rust:** C와 유사한 수준의 성능을 제공하면서도 메모리 안전성을 보장합니다. 하지만 학습 곡선이 높고, 개발 복잡도가 높습니다.
 
-**3. Cross-Language Comparison**
+*   **Java:** 플랫폼 독립성이 중요하고, 객체 지향 프로그래밍이 필요한 경우에 적합합니다. 가비지 컬렉션 오버헤드가 발생할 수 있지만, 다양한 라이브러리와 프레임워크를 사용할 수 있습니다.
 
--   **Surprising Results:** Python performing comparatively well (better than JS, Java, and PHP) is somewhat surprising, given its reputation as a slower language. This suggests a very optimized underlying BigInt implementation or a different algorithm approach leveraging native C libraries for efficient arithmetic.
+*   **Python:** 빠른 프로토타입 개발과 데이터 분석에 적합합니다. BigInt 연산을 효율적으로 처리할 수 있지만, 다른 언어에 비해 성능이 떨어질 수 있습니다.
 
--   **Similar Performance:** C, Go, and Rust show relatively similar performance, which is expected given their compiled nature and focus on efficiency. They are the clear performance leaders in this benchmark. JavaScript and Java also perform relatively close to each other.
+*   **PHP:** 웹 개발에 특화되어 있으며, 빠른 개발 속도를 제공합니다. 하지만 다른 언어에 비해 성능이 떨어지고, 메모리 관리 방식이 제한적입니다.
 
-**4. Summary**
+*   **JavaScript:** 웹 프론트엔드 및 백엔드 개발에 적합하며, 유연성이 높습니다. JIT 컴파일러를 통해 성능을 향상시킬 수 있지만, 다른 언어에 비해 성능이 떨어질 수 있습니다.
 
--   **Performance Trade-offs:**
-
-    -   **Speed:** C, Go, and Rust provide the best performance for computationally intensive tasks due to compilation and minimal runtime overhead.
-    -   **Ease of Use/Development Speed:** Python and JavaScript prioritize ease of use and development speed, which often comes at the expense of raw performance. Java offers a middle ground with decent performance and a large ecosystem.
-    -   **Platform Compatibility:** JavaScript excels in web browser environments, while Java offers good cross-platform compatibility.
-
--   **When to Choose Each Language:**
-
-    -   **C/Rust/Go:** Choose these for applications where performance is paramount (e.g., system programming, high-performance computing, game development). Rust is often favored for its safety guarantees without sacrificing speed.
-    -   **Python:** Choose for scripting, data science, machine learning, or rapid prototyping where performance is not the absolute top priority. Leverage optimized libraries for number crunching when possible.
-    -   **JavaScript:** Choose for front-end web development, server-side applications with Node.js, and interactive applications.
-    -   **Java:** Choose for enterprise applications, Android development, or where cross-platform compatibility is important.
-    -   **PHP:** Primarily for web development (especially with content management systems like WordPress). Not ideal for computationally intensive tasks unless performance is secondary.
-
-**Important Notes:**
-
--   **"TODO" versions:** The `version: "TODO"` entries mean that the specific versions of the languages and compilers are unknown, making a more precise comparison difficult.
--   **Algorithm variation:** The algorithm used in each language is unknown, which makes it difficult to compare the languages. It's possible that some used recursion while other used a loop or memoization.
--   **Optimization:** The degree of optimization applied in each language is unknown.
--   **Hardware:** The hardware used to run these benchmarks may have an impact on the results.
+결론적으로, 계산 집약적인 작업을 수행할 때 언어를 선택할 때는 성능 요구 사항, 개발 편의성, 메모리 관리 방식 등을 종합적으로 고려해야 합니다. 주어진 벤치마크 결과를 바탕으로 볼 때, C, Go, Rust가 좋은 선택이 될 수 있지만, Java와 Python도 특정 상황에서는 충분히 경쟁력 있는 선택이 될 수 있습니다.

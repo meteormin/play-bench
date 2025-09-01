@@ -1,13 +1,8 @@
 import json
 import sys
-import os
-from dotenv import load_dotenv
 from pathlib import Path
-from models import ask_to_openai, ask_to_gemini
-
-load_dotenv()
-
-USE_MODEL = os.getenv("MCP_MODEL", "gemini")  # openai | gemini
+from .models import ask_to_openai, ask_to_gemini
+from .env import *
 
 
 def load_summary(path: str):
@@ -85,10 +80,9 @@ Please write a clear and structured analysis in markdown that includes:
 """
 
     if USE_MODEL == "openai":
-        ask_to_openai(os.getenv("OPENAI_API_KEY"), prompt)
-
+        return ask_to_openai(OPENAI_API_KEY, prompt, LANGUAGE)
     elif USE_MODEL == "gemini":
-        ask_to_gemini(os.getenv("GEMINI_API_KEY", prompt))
+        return ask_to_gemini(GEMINI_API_KEY, prompt, LANGUAGE)
     else:
         raise ValueError(f"Unsupported MCP_MODEL={USE_MODEL}")
 

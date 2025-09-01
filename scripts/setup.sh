@@ -15,4 +15,4 @@ if [ ! -d "$VENV_DIR" ]; then
     pip install -r ./mcp/requirements.txt
 fi
 
-echo "run: source $VENV_DIR/bin/activate"
+echo "Do it: source $VENV_DIR/bin/activate"

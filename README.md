@@ -13,16 +13,23 @@ The goal is to provide a fair, reproducible, and fun playground for benchmarking
 To build and run all benchmarks you will need:
 
 -   **Go** 1.25+
+    - `brew install go@1.25`
 -   **Python** 3.13+
 -   **Java** 21+ (JDK required for `javac` and `java`)
+    - `brew install openjdk@21`
 -   **C compiler** (GCC 13+ or Clang)
+    - `brew install gcc`
 -   **Rust** (latest stable, includes `rustc` and `cargo`)
+    - `brew install rust`
 -   **Node.js** 22+
--   **PHP** 8+
+    - `brew install node@22`
+-   **PHP** 8.4+
+    - `brew install php@8.4`
 
 Additionally:
 
 -   **GNU Make / Bash** (for build and run scripts)
+    -   `brew install make`
 -   Linux or macOS environment (Windows may need WSL2 or MinGW)
 
 ## Algorithms
