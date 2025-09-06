@@ -94,7 +94,7 @@ def generate_full_report(summary: dict, reports_dir: Path) -> Path:
 
     final_report = base_report + "\n\n## AI Insights\n" + ai_insights
 
-    out_path = reports_dir / f"{summary['algo']}_report.md"
+    out_path = reports_dir / f"{summary['algo']}_{summary['n']}_report.md"
     with open(out_path, "w") as f:
         f.write(final_report)
 

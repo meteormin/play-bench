@@ -116,7 +116,7 @@ func main() {
 		Results:   results,
 	}
 
-	outPath := filepath.Join("results", fmt.Sprintf("%s_summary.json", algo))
+	outPath := filepath.Join("results", fmt.Sprintf("%s_%s_summary.json", algo, n))
 	data, _ := json.MarshalIndent(summary, "", "  ")
 	if err := os.WriteFile(outPath, data, 0644); err != nil {
 		fmt.Printf("Error writing summary file: %v\n", err)

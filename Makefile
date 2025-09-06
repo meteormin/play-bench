@@ -31,3 +31,8 @@ setup:
 .PHONY: build
 build:
 	./scripts/build.sh
+
+##run algo={fib} n={number}: run main
+.PHONY: run
+run:
+	./main $(algo) $(n)

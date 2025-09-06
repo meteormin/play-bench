@@ -1,0 +1,50 @@
+{
+  "benchmark": "play-bench",
+  "date": "2025-09-06T05:13:43Z",
+  "algo": "fib",
+  "n": 100,
+  "results": [
+    {
+      "lang": "python",
+      "version": "TODO",
+      "result": "354224848179261915075",
+      "time_ms": 0.007
+    },
+    {
+      "lang": "java",
+      "version": "TODO",
+      "result": "354224848179261915075",
+      "time_ms": 0.269
+    },
+    {
+      "lang": "c",
+      "version": "TODO",
+      "result": "354224848179261915075",
+      "time_ms": 0.056
+    },
+    {
+      "lang": "rust",
+      "version": "TODO",
+      "result": "354224848179261915075",
+      "time_ms": 0.038
+    },
+    {
+      "lang": "js",
+      "version": "TODO",
+      "result": "354224848179261915075",
+      "time_ms": 0.082
+    },
+    {
+      "lang": "php",
+      "version": "TODO",
+      "result": "354224848179261915075",
+      "time_ms": 0.071
+    },
+    {
+      "lang": "go",
+      "version": "TODO",
+      "result": "354224848179261915075",
+      "time_ms": 0.014
+    }
+  ]
+}
