@@ -151,8 +151,8 @@ make build
 3. Run
 
 ```sh
-# main python script
-./main
+# run main python script
+make run algo=<algo> n=<input N>
 ```
 
 ## License
