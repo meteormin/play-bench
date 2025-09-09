@@ -54,18 +54,19 @@ Currently included (planned to expand):
 
 ```sh
 play-bench/
-├── benchmarks/      # Benchmark implementations per language
-│   ├── c/
-│   ├── go/
-│   ├── java/
-│   ├── python/
-│   ├── rust/
-│   ├── js/
-│   └── php/
-├── runner/          # Automation and result collection tools
-├── scripts/         # Build and execution scripts
-├── results/         # Raw logs and summarized statistics
-└── README.md        # Project documentation
+├── benchmarks/      # Benchmark implementations for each language (e.g., fib, primecount)
+│   ├── c/           # C implementations
+│   ├── go/          # Go implementations
+│   ├── java/        # Java implementations
+│   ├── python/      # Python implementations
+│   ├── rust/        # Rust implementations
+│   ├── js/          # JavaScript implementations
+│   └── php/         # PHP implementations
+├── mcp/             # MCP communication layer: request/response handlers, execution logic, and post-processing
+├── runner/          # Automation tools for running benchmarks and collecting results
+├── scripts/         # Build and execution helper scripts
+├── results/         # Raw execution logs and aggregated benchmark statistics
+└── README.md        # Project documentation and usage guide
 ```
 
 ## Roadmap
