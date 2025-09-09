@@ -59,7 +59,7 @@ func parseResult(output string) (result string, elapsed float64) {
 var commands = map[string]map[string][]string{
 	"fib": {
 		// ✅ 사전 빌드된 바이너리/클래스 실행
-		"go":     {"benchmarks/go/fib"},                     // go build -o benchmarks/go/fib fib.go
+		"go":     {"benchmarks/go/build/fib"},               // go build -o benchmarks/go/build/fib fib.go
 		"python": {"python3", "benchmarks/python/fib.py"},   // 인터프리터 그대로
 		"java":   {"java", "-cp", "benchmarks/java", "Fib"}, // javac으로 class 미리 생성
 		"c":      {"benchmarks/c/fib"},                      // gcc fib.c -o fib

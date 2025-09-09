@@ -25,7 +25,7 @@ def main():
     REPORTS_DIR.mkdir(exist_ok=True)
 
     print(f"Running benchmark: {algo} N={n}")
-    json_file = RESULTS_DIR / f"{algo}_summary.json"
+    json_file = RESULTS_DIR / f"{algo}_{n}_summary.json"
 
     # 1. runner 실행 → JSON 결과
     subprocess.run([str(BIN_RUNNER), algo, n], check=True)
